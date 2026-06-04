@@ -2,7 +2,7 @@ import io
 import uuid
 import mimetypes
 from pathlib import Path
-from flask import Flask, request, jsonify, render_template, send_file
+from flask import Flask, request, jsonify, render_template, send_file, Response
 from werkzeug.utils import secure_filename
 from markitdown import MarkItDown
 
@@ -46,6 +46,25 @@ def _cleanup(path: Path) -> None:
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/robots.txt")
+def robots():
+    content = "User-agent: *\nAllow: /\nSitemap: https://markify-w6ak.onrender.com/sitemap.xml\n"
+    return Response(content, mimetype="text/plain")
+
+
+@app.route("/sitemap.xml")
+def sitemap():
+    content = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://markify-w6ak.onrender.com/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>"""
+    return Response(content, mimetype="application/xml")
 
 
 @app.route("/convert", methods=["POST"])
