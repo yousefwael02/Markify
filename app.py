@@ -54,6 +54,14 @@ def robots():
     return Response(content, mimetype="text/plain")
 
 
+@app.route("/google1dea5900cad78f82.html")
+def google_verification():
+    return Response(
+        "google-site-verification: google1dea5900cad78f82.html",
+        mimetype="text/html",
+    )
+
+
 @app.route("/sitemap.xml")
 def sitemap():
     content = """<?xml version="1.0" encoding="UTF-8"?>
